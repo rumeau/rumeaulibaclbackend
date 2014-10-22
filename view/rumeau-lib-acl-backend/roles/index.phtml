@@ -1,0 +1,65 @@
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">
+            <a href="<?= $this->url(
+                'admin/rumeaulibaclbackend-acl'
+            ); ?>"><i class="fa fa-chevron-left"></i></a> / <?= $this->translate('Acl'); ?>
+        </h1>
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+
+        <div class="btn-toolbar">
+            <div class="pull-right">
+                <a class="btn btn-primary" href="<?= $this->url(
+                    'admin/rumeaulibaclbackend-acl',
+                    ['controller' => 'roles', 'action' => 'create']
+                ); ?>"><i class="fa fa-plus"></i> <?= $this->translate('New Role'); ?></a>
+            </div>
+        </div>
+
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th><?= $this->translate('Role ID'); ?></th>
+                <th class="col-sm-2"><?= $this->translate('Parent'); ?></th>
+                <th class="col-sm-1"></th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <?php foreach ($this->roles as $role) : ?>
+            <tr>
+                <td>
+                    <?php
+                    echo '<strong>' . $role['role']->getRoleId() . '</strong>';
+                    if (isset($role['description']) && !empty($role['description'])) {
+                        echo '<br /><small class="text-muted">' . $role['description'] . '</small>';
+                    }
+                    ?>
+                </td>
+                <td><?php
+                    if (($parent = $role['role']->getParent()) instanceof \BjyAuthorize\Acl\Role) {
+                        echo $parent->getRoleId();
+                    } else {
+                        echo '';
+                    }
+                    ?></td>
+                <td>
+                    <?php if (!$role['hard']) : ?>
+                    <a class="btn btn-xs btn-default" href="<?= $this->url(
+                        'admin/rumeaulibaclbackend-acl',
+                        ['controller' => 'roles', 'action' => 'edit'],
+                        ['query' => ['id' => $role['role']->getRoleId()]]
+                    ); ?>"><i class="fa fa-edit"></i></a>
+                    <?php endif; ?>
+                </td>
+            </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+</div>

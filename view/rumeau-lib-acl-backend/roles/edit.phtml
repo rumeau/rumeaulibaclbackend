@@ -1,0 +1,48 @@
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header"><?= $this->translate('Edit Role'); ?></h1>
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+
+<div class="row">
+    <div class="col-lg-6">
+        <?php
+        $form = $this->form;
+
+        if (count($form->get('formcsrf')->getMessages())) :
+        ?>
+            <div class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert">
+                    <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+                </button>
+                <?= $this->translate('The form has expired, please try again'); ?>
+            </div>
+        <?php
+        endif;
+
+        echo $this->form(null, 'horizontal')->openTag($form);
+        ?>
+        <fieldset>
+            <legend><?= $this->translate('Role Information'); ?></legend>
+
+            <?php
+            echo $this->formrow($form->get('roleId'));
+            echo $this->formrow($form->get('parent'));
+            echo $this->formrow($form->get('description'));
+            ?>
+        </fieldset>
+
+        <div class="form-group">
+            <div class="col-lg-offset-3 col-md-offset-3 col-lg-9 col-md-9">
+                <?= $this->formhidden($form->get('formcsrf')); ?>
+                <a class="btn btn-default" href="<?= $this->url(
+                    'admin/rumeaulibaclbackend-acl',
+                    ['controller' => 'roles']
+                ); ?>">&larr; <?= $this->translate('Cancel'); ?></a>
+                <button class="btn btn-primary" type="submit"><i class="fa fa-save"></i>  <?= $this->translate('Save'); ?></button>
+            </div>
+        </div>
+        <?= $this->form()->closeTag(); ?>
+    </div>
+</div>
